@@ -1,0 +1,52 @@
+{
+  "name": "meshblu-rabbitmq-auth-service",
+  "version": "1.0.0",
+  "description": "Put some description here",
+  "keywords": [],
+  "homepage": "https://github.com/octoblu/meshblu-rabbitmq-auth",
+  "bugs": "https://github.com/octoblu/meshblu-rabbitmq-auth/issues",
+  "author": {
+    "name": "Octoblu",
+    "url": "https://github.com/octoblu"
+  },
+  "main": "command.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octoblu/meshblu-rabbitmq-auth.git"
+  },
+  "scripts": {
+    "start": "node command.js",
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "istanbul": "^0.4.0",
+    "mocha": "^2.3.4",
+    "mocha-istanbul": "^0.2.0",
+    "request": "^2.66.0",
+    "@octoblu/shmock": "^0.7.2",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
+  },
+  "dependencies": {
+    "@octoblu/redis-ns": "^1.2.2",
+    "body-parser": "^1.14.1",
+    "coffee-script": "^1.10.0",
+    "cors": "^2.5.3",
+    "debug": "^2.2.0",
+    "errorhandler": "^1.4.2",
+    "express": "^4.13.3",
+    "express-meshblu-auth": "^2.0.0",
+    "express-meshblu-healthcheck": "^1.0.1",
+    "ioredis": "^1.15.1",
+    "lodash": "^3.10.1",
+    "meshblu-config": "^3.1.1",
+    "morgan": "^1.6.1"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  },
+  "license": "MIT"
+}
