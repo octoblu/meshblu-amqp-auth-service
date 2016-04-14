@@ -1,4 +1,4 @@
-# meshblu-rabbitmq-auth-service
+# meshblu-meshblu-amqp-auth-service
 Meshblu to RabbitMQ authn/authz service
 
 [![Build Status](https://travis-ci.org/octoblu/.svg?branch=master)](https://travis-ci.org/octoblu/)

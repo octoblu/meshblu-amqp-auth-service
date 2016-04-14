@@ -7,7 +7,7 @@ RedisNS = require '@octoblu/redis-ns'
 
 describe 'authenticate', ->
   beforeEach ->
-    @client = new RedisNS 'rabbitmq-auth', redis.createClient()
+    @client = new RedisNS 'meshblu-amqp-auth', redis.createClient()
 
   beforeEach (done) ->
     @meshblu = shmock 0xd00f
@@ -15,7 +15,10 @@ describe 'authenticate', ->
     serverOptions =
       port: undefined,
       disableLogging: true
-      namespace: 'rabbitmq-auth'
+      namespace: 'meshblu-amqp-auth'
+      password: 'judgementday'
+      redisUri: 'redis://localhost'
+      port: 0xcaff
       meshbluConfig:
         server: 'localhost'
         port: 0xd00f
@@ -32,20 +35,112 @@ describe 'authenticate', ->
   afterEach (done) ->
     @meshblu.close done
 
-  describe 'GET /resource (request.queue, write only)', ->
-    beforeEach (done) ->
-      options =
-        uri: '/resource'
-        baseUrl: "http://localhost:#{@serverPort}"
-        qs:
-          username: 'some-uuid'
-          resource: 'queue'
-          name: 'request.queue'
-          permission: 'write'
+  describe 'when normal user', ->
+    describe 'GET /resource (meshblu.requests)', ->
+      beforeEach (done) ->
+        options =
+          uri: '/resource'
+          baseUrl: "http://localhost:#{@serverPort}"
+          qs:
+            username: 'some-uuid'
+            resource: 'queue'
+            name: 'meshblu.requests'
+            permission: 'write'
 
-      request.get options, (error, @response, @body) =>
-        done error
+        request.get options, (error, @response, @body) =>
+          done error
 
-    it 'should return a 200', ->
-      expect(@response.statusCode).to.equal 200
-      expect(@body).to.equal('allow')
+      it 'should return deny', ->
+        expect(@response.statusCode).to.equal 200
+        expect(@body).to.equal('deny')
+
+    describe 'GET /resource (some-uuid.*)', ->
+      beforeEach (done) ->
+        options =
+          uri: '/resource'
+          baseUrl: "http://localhost:#{@serverPort}"
+          qs:
+            username: 'some-uuid'
+            resource: 'queue'
+            name: 'some-uuid.queue'
+            permission: 'write'
+
+        request.get options, (error, @response, @body) =>
+          done error
+
+      it 'should return allow', ->
+        expect(@response.statusCode).to.equal 200
+        expect(@body).to.equal('allow')
+
+    describe 'GET /resource (amq.gen-faoweifj)', ->
+      beforeEach (done) ->
+        options =
+          uri: '/resource'
+          baseUrl: "http://localhost:#{@serverPort}"
+          qs:
+            username: 'some-uuid'
+            resource: 'queue'
+            name: 'amq.gen-faoweifj'
+            permission: 'write'
+
+        request.get options, (error, @response, @body) =>
+          done error
+
+      it 'should return allow', ->
+        expect(@response.statusCode).to.equal 200
+        expect(@body).to.equal('allow')
+
+  describe 'when meshblu', ->
+    describe 'GET /resource (meshblu.requests)', ->
+      beforeEach (done) ->
+        options =
+          uri: '/resource'
+          baseUrl: "http://localhost:#{@serverPort}"
+          qs:
+            username: 'meshblu'
+            resource: 'queue'
+            name: 'meshblu.requests'
+            permission: 'write'
+
+        request.get options, (error, @response, @body) =>
+          done error
+
+      it 'should return allow', ->
+        expect(@response.statusCode).to.equal 200
+        expect(@body).to.equal('allow')
+
+    describe 'GET /resource (some-uuid.*)', ->
+      beforeEach (done) ->
+        options =
+          uri: '/resource'
+          baseUrl: "http://localhost:#{@serverPort}"
+          qs:
+            username: 'meshblu'
+            resource: 'queue'
+            name: 'some-uuid.queue'
+            permission: 'write'
+
+        request.get options, (error, @response, @body) =>
+          done error
+
+      it 'should return deny', ->
+        expect(@response.statusCode).to.equal 200
+        expect(@body).to.equal('deny')
+
+    describe 'GET /resource (amq.gen-faoweifj)', ->
+      beforeEach (done) ->
+        options =
+          uri: '/resource'
+          baseUrl: "http://localhost:#{@serverPort}"
+          qs:
+            username: 'some-uuid'
+            resource: 'queue'
+            name: 'amq.gen-faoweifj'
+            permission: 'write'
+
+        request.get options, (error, @response, @body) =>
+          done error
+
+      it 'should return allow', ->
+        expect(@response.statusCode).to.equal 200
+        expect(@body).to.equal('allow')

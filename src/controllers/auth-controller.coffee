@@ -34,10 +34,7 @@ class AuthController
 
     allow = false
 
-    if _.startsWith(name, 'amq.') && permission = 'write'
-      allow = true
-
-    if username == 'meshblu'
+    if /^(amq\.gen-.*|amq.default)/.test(name) && permission = 'write'
       allow = true
 
     if _.startsWith name, username

@@ -1,10 +1,10 @@
 {
-  "name": "meshblu-rabbitmq-auth-service",
-  "version": "1.0.0",
-  "description": "Put some description here",
+  "name": "meshblu-amqp-auth-service",
+  "version": "0.0.0",
+  "description": "amqp auth service for Mesblu",
   "keywords": [],
-  "homepage": "https://github.com/octoblu/meshblu-rabbitmq-auth",
-  "bugs": "https://github.com/octoblu/meshblu-rabbitmq-auth/issues",
+  "homepage": "https://github.com/octoblu/meshblu-meshblu-amqp-auth",
+  "bugs": "https://github.com/octoblu/meshblu-meshblu-amqp-auth/issues",
   "author": {
     "name": "Octoblu",
     "url": "https://github.com/octoblu"
@@ -12,7 +12,7 @@
   "main": "command.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/octoblu/meshblu-rabbitmq-auth.git"
+    "url": "https://github.com/octoblu/meshblu-meshblu-amqp-auth.git"
   },
   "scripts": {
     "start": "node command.js",

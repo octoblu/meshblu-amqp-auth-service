@@ -7,7 +7,7 @@ RedisNS = require '@octoblu/redis-ns'
 
 describe 'authenticate', ->
   beforeEach ->
-    @client = new RedisNS 'rabbitmq-auth', redis.createClient()
+    @client = new RedisNS 'meshblu-amqp-auth', redis.createClient()
 
   beforeEach (done) ->
     @meshblu = shmock 0xd00f
@@ -15,7 +15,10 @@ describe 'authenticate', ->
     serverOptions =
       port: undefined,
       disableLogging: true
-      namespace: 'rabbitmq-auth'
+      namespace: 'meshblu-amqp-auth'
+      password: 'judgementday'
+      redisUri: 'redis://localhost'
+      port: 0xcaff
       meshbluConfig:
         server: 'localhost'
         port: 0xd00f

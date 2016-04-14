@@ -9,7 +9,7 @@ class Command
       port:           process.env.PORT || 80
       disableLogging: process.env.DISABLE_LOGGING == "true"
       meshbluConfig:  new MeshbluConfig().toJSON()
-      namespace:      process.env.NAMESPACE || 'rabbitmq-auth'
+      namespace:      process.env.NAMESPACE || 'meshblu-amqp-auth'
       password:       process.env.PASSWORD
 
   panic: (error) =>
