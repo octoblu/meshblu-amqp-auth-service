@@ -11,8 +11,12 @@ redis              = require 'ioredis'
 RedisNS            = require '@octoblu/redis-ns'
 
 class Server
-  constructor: ({@disableLogging, @port, @meshbluConfig, @redisUri, @namespace})->
+  constructor: ({@disableLogging, @port, @meshbluConfig, @redisUri, @namespace, @password})->
     throw new Error 'Server requires namespace' unless @namespace?
+    throw new Error 'Server requires password' unless @password?
+    throw new Error 'Server requires redisUri' unless @redisUri?
+    throw new Error 'Server requires meshbluConfig' unless @meshbluConfig?
+    throw new Error 'Server requires port' unless @port?
 
   address: =>
     @server.address()
@@ -32,7 +36,7 @@ class Server
     client.on 'ready', (error) =>
       return callback error if error?
 
-      router = new Router {@meshbluConfig, client}
+      router = new Router {@meshbluConfig, client, @password}
       router.route app
 
       @server = app.listen @port, callback

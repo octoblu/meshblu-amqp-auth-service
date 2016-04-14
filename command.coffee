@@ -10,6 +10,7 @@ class Command
       disableLogging: process.env.DISABLE_LOGGING == "true"
       meshbluConfig:  new MeshbluConfig().toJSON()
       namespace:      process.env.NAMESPACE || 'rabbitmq-auth'
+      password:       process.env.PASSWORD
 
   panic: (error) =>
     console.error error.stack
@@ -22,6 +23,7 @@ class Command
     @panic new Error('Missing required environment variable: MESHBLU_PROTOCOL') if _.isEmpty @serverOptions.meshbluConfig.protocol
     @panic new Error('Missing required environment variable: REDIS_URI') if _.isEmpty @serverOptions.redisUri
     @panic new Error('Missing required environment variable: NAMESPACE') if _.isEmpty @serverOptions.namespace
+    @panic new Error('Missing required environment variable: PASSWORD') if _.isEmpty @serverOptions.password
 
     server = new Server @serverOptions
     server.run (error) =>

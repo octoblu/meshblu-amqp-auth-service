@@ -2,12 +2,12 @@ _           = require 'lodash'
 MeshbluHttp = require 'meshblu-http'
 
 class AuthController
-  constructor: ({@client,@meshbluConfig}) ->
+  constructor: ({@client,@meshbluConfig,@password}) ->
 
   user: (request, response) =>
     {username,password} = request.query
 
-    if username == 'meshblu' && password == '05539223b927d3091eb1d53dcb31a6ff92cc8edf'
+    if username == 'meshblu' && password == @password
       return @client.setex username, 30, new Date(), =>
         return response.send('allow')
 
@@ -32,21 +32,18 @@ class AuthController
   resource: (request, response) =>
     {username, resource, name, permission} = request.query
 
-    if username == 'meshblu'
-      return response.send('allow')
+    allow = false
 
-    # if name == 'request.queue' && permission == 'configure'
-    #   return response.send('allow')
+    if _.startsWith(name, 'amq.') && permission = 'write'
+      allow = true
+
+    if username == 'meshblu'
+      allow = true
 
     if _.startsWith name, username
-      return response.send('allow')
+      allow = true
 
-    if name == 'amq.default'
-      return response.send('allow')
-
-    if resource == 'queue' && name == 'request.queue' && permission == 'write'
-      return response.send('allow')
-
+    return response.send('allow') if allow
     response.send('deny')
 
 module.exports = AuthController

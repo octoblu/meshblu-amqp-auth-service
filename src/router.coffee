@@ -1,8 +1,8 @@
 AuthController = require './controllers/auth-controller'
 
 class Router
-  constructor: ({client,meshbluConfig}) ->
-    @authController = new AuthController {client,meshbluConfig}
+  constructor: ({client,meshbluConfig,password}) ->
+    @authController = new AuthController {client,meshbluConfig,password}
 
   route: (app) =>
     app.get '/user', @authController.user
