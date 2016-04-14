@@ -36,7 +36,7 @@ describe 'authenticate', ->
     @meshblu.close done
 
   describe 'when normal user', ->
-    describe 'GET /resource (meshblu.requests)', ->
+    describe 'GET /resource (meshblu.request)', ->
       beforeEach (done) ->
         options =
           uri: '/resource'
@@ -44,7 +44,7 @@ describe 'authenticate', ->
           qs:
             username: 'some-uuid'
             resource: 'queue'
-            name: 'meshblu.requests'
+            name: 'meshblu.request'
             permission: 'write'
 
         request.get options, (error, @response, @body) =>
@@ -91,7 +91,7 @@ describe 'authenticate', ->
         expect(@body).to.equal('allow')
 
   describe 'when meshblu', ->
-    describe 'GET /resource (meshblu.requests)', ->
+    describe 'GET /resource (meshblu.request)', ->
       beforeEach (done) ->
         options =
           uri: '/resource'
@@ -99,7 +99,7 @@ describe 'authenticate', ->
           qs:
             username: 'meshblu'
             resource: 'queue'
-            name: 'meshblu.requests'
+            name: 'meshblu.request'
             permission: 'write'
 
         request.get options, (error, @response, @body) =>
