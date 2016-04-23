@@ -6,7 +6,8 @@ class AuthController
 
   user: (request, response) =>
     {username,password} = request.query
-
+    return response.send('allow')
+    
     if username == 'meshblu' && password == @password
       return @client.setex username, 30, new Date(), =>
         return response.send('allow')
@@ -30,15 +31,28 @@ class AuthController
     response.send('allow')
 
   resource: (request, response) =>
-    {username, resource, name, permission} = request.query
+    {username, resource, name, permission, vhost} = request.query
+    console.log request.query
 
     allow = false
+    allow = true
 
-    if /^(amq\.gen-.*|amq.default)/.test(name) && permission = 'write'
+    if username == 'meshblu'
       allow = true
+
+    if /^amq\.(gen-.*|default|topic)$/.test(name) && permission = 'write'
+      allow = true
+
+    if /^meshblu[\.\/]/.test(name) && permission = 'write'
+      allow = true
+
+    if vhost == '/mqtt'
+      name = name.replace(/^mqtt-subscription-/,'')
 
     if _.startsWith name, username
       allow = true
+
+    console.log {allow}
 
     return response.send('allow') if allow
     response.send('deny')
