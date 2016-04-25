@@ -39,19 +39,22 @@ class AuthController
 
     allow = false
 
+    if username == 'meshblu'
+      allow = true
+
+    if /^amq\.(gen-.*|default|topic)$/.test(name) && permission = 'write'
+      allow = true
+
     if /^meshblu[\.\/]/.test(name) && permission = 'write'
       allow = true
 
-    if /^amq\.(gen-.*|default|topic)/.test(name) && permission = 'write'
-      allow = true
-
-    if vhost == 'mqtt'
+    if vhost == '/mqtt'
       name = name.replace /^mqtt-subscription-/, ''
 
     if _.startsWith name, username
       allow = true
 
-    console.log allow
+    console.log {allow}
     return response.send('allow') if allow
     response.send('deny')
 
