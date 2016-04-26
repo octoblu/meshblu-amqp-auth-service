@@ -39,6 +39,9 @@ class AuthController
 
     allow = false
 
+    if name.match(/[\*\#]/)
+      return response.send('deny')
+
     if username == 'meshblu'
       allow = true
 
@@ -48,12 +51,13 @@ class AuthController
     if /^meshblu[\.\/]/.test(name) && permission = 'write'
       allow = true
 
-    if vhost == '/mqtt'
+    if vhost == 'mqtt'
       name = name.replace /^mqtt-subscription-/, ''
 
     if _.startsWith name, username
       allow = true
 
+    console.log {username, resource, name, permission, vhost}
     console.log {allow}
     return response.send('allow') if allow
     response.send('deny')
