@@ -1,6 +1,6 @@
 {
   "name": "meshblu-amqp-auth-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "amqp auth service for Mesblu",
   "keywords": [],
   "homepage": "https://github.com/octoblu/meshblu-meshblu-amqp-auth",
@@ -16,7 +16,10 @@
   },
   "scripts": {
     "start": "node command.js",
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "nyc npm test",
+    "mocha:json": "env NPM_ENV=test mocha --reporter json > coverage/mocha.json",
+    "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-"
   },
   "devDependencies": {
     "chai": "^3.4.1",
@@ -26,7 +29,10 @@
     "request": "^2.66.0",
     "@octoblu/shmock": "^0.7.2",
     "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0"
+    "sinon-chai": "^2.8.0",
+    "nyc": "^8.3.0",
+    "mocha-osx-reporter": "^0.1.2",
+    "mocha-multi": "^0.9.1"
   },
   "dependencies": {
     "@octoblu/redis-ns": "^1.2.2",
@@ -48,5 +54,16 @@
     "node": ">=0.8.0",
     "npm": ">=1.2.10"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "nyc": {
+    "cache": true,
+    "reporter": [
+      "text-summary",
+      "lcov",
+      "json"
+    ],
+    "extension": [
+      ".coffee"
+    ]
+  }
 }
