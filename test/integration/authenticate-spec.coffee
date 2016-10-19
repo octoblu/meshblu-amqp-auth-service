@@ -4,6 +4,7 @@ shmock  = require '@octoblu/shmock'
 Server  = require '../../src/server'
 redis   = require 'ioredis'
 RedisNS = require '@octoblu/redis-ns'
+enableDestroy = require 'server-destroy'
 
 describe 'authenticate', ->
   beforeEach ->
@@ -11,6 +12,7 @@ describe 'authenticate', ->
 
   beforeEach (done) ->
     @meshblu = shmock 0xd00f
+    enableDestroy @meshblu
 
     serverOptions =
       port: undefined,
@@ -32,8 +34,8 @@ describe 'authenticate', ->
   afterEach (done) ->
     @server.stop done
 
-  afterEach (done) ->
-    @meshblu.close done
+  afterEach ->
+    @meshblu.destroy()
 
   describe 'GET /user', ->
     beforeEach (done) ->

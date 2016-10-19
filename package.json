@@ -1,6 +1,6 @@
 {
   "name": "meshblu-amqp-auth-service",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "amqp auth service for Mesblu",
   "keywords": [],
   "homepage": "https://github.com/octoblu/meshblu-meshblu-amqp-auth",
@@ -18,21 +18,25 @@
     "start": "node command.js",
     "test": "mocha",
     "coverage": "nyc npm test",
-    "mocha:json": "env NPM_ENV=test mocha --reporter json > coverage/mocha.json",
+    "mocha:json": "mocha --reporter json > coverage/mocha.json",
     "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
-    "istanbul": "^0.4.0",
-    "mocha": "^2.3.4",
-    "mocha-istanbul": "^0.2.0",
-    "request": "^2.66.0",
     "@octoblu/shmock": "^0.7.2",
-    "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0",
-    "nyc": "^8.3.0",
+    "chai": "^3.5.0",
+    "chai-subset": "^1.3.0",
+    "coffee-script": "^1.11.1",
+    "env-test": "^1.0.0",
+    "istanbul": "^0.4.0",
+    "mocha": "^2.5.3",
+    "mocha-istanbul": "^0.2.0",
+    "mocha-multi": "^0.9.1",
     "mocha-osx-reporter": "^0.1.2",
-    "mocha-multi": "^0.9.1"
+    "nyc": "^8.3.1",
+    "request": "^2.66.0",
+    "server-destroy": "^1.0.1",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0"
   },
   "dependencies": {
     "@octoblu/redis-ns": "^1.2.2",
