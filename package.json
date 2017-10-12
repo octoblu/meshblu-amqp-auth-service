@@ -1,6 +1,6 @@
 {
   "name": "meshblu-amqp-auth-service",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "amqp auth service for Mesblu",
   "keywords": [],
   "homepage": "https://github.com/octoblu/meshblu-meshblu-amqp-auth",

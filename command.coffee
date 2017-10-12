@@ -6,10 +6,10 @@ class Command
   constructor: ->
     @serverOptions =
       redisUri:       process.env.REDIS_URI
-      port:           process.env.PORT || 80
-      disableLogging: process.env.DISABLE_LOGGING == "true"
+      port:           process.env.PORT ? 80
+      disableLogging: (process.env.DISABLE_LOGGING ? 'true') == "true"
       meshbluConfig:  new MeshbluConfig().toJSON()
-      namespace:      process.env.NAMESPACE || 'meshblu-amqp-auth'
+      namespace:      process.env.NAMESPACE ? 'meshblu-amqp-auth'
       password:       process.env.PASSWORD
 
   panic: (error) =>
